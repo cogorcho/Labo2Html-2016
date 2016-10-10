@@ -1,4 +1,6 @@
 body {
+	background-image: url(../images/fondo2.jpg);
+    background-size: inherit;
 	background-color: gainsboro;
 	margin-right: 10%;
 	margin-left: 10%;
@@ -31,7 +33,7 @@ hr {
 
 header {
 	height: 12%;
-	background-color: #cccccc;
+	/*background-color: #cccccc;*/
 	border: 1px solid black;
 	border-radius: 7px;
 	padding: 3px;
@@ -81,7 +83,7 @@ ul li a:hover {
 
 footer {
 	height: 5%;
-	background-color: #cccccc;
+	/*background-color: #cccccc;*/
 	border: 1px solid black;
 	border-radius: 7px;
 	padding: 3px;
