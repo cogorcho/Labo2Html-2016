@@ -1,0 +1,97 @@
+body {
+	background-color: gainsboro;
+	margin-right: 10%;
+	margin-left: 10%;
+	font-family: 'Cormorant+Garamond','Varela+Round', 'Roboto+Mono', 'Ubuntu Condensed', sans-serif;
+	font-size: 1em;
+}
+
+input {
+	border-radius: 4px;
+}
+
+fieldset {
+	border-radius: 7px;
+	margin-bottom: 0.5%;
+}
+
+#carga {
+	width: 50%;
+	float: left;
+}
+
+#cargados {
+	width: 40%;
+}
+
+hr {
+	clear: both;
+	margin-bottom: 0.5%;
+}
+
+header {
+	height: 12%;
+	background-color: #cccccc;
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 3px;
+	text-align: center;
+}
+
+nav {
+	clear: both;
+	width: 100%;
+	margin-top: 0.5%;
+	background-color: #cccccc;
+	color: white;
+	list-style: none;
+
+}
+
+nav ul {
+	list-style: none;
+	background-color: #444;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+	border-radius: 7px;
+}
+
+nav li {
+	line-height: 35px;
+	display: inline;
+}
+
+nav a {
+	font-family: 'Montserrat', serif;
+	font-size: 0.8em;
+	font-weight: bold;
+	color: LightSkyBlue;
+	text-decoration: none;
+}
+nav ul li a:hover {
+	color: Salmon;
+	font-size: 1.2em;
+}
+
+ul li a:hover {
+	color: Magenta;
+	font-size: 1.0em;
+}
+
+footer {
+	height: 5%;
+	background-color: #cccccc;
+	border: 1px solid black;
+	border-radius: 7px;
+	padding: 3px;
+	text-align: center;	
+	margin-top: 0.5%;
+}
+
+h1,h2,h4 {
+	font-family: 'Tangerine', serif;
+	font-size: 2.5em;
+	margin-bottom: 1.5%;
+	margin-top: 1.5%;
+}

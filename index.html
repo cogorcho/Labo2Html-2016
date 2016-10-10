@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+	<title>Labo2 Html S02</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="css/estilos.css">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Tangerine|Roboto+Mono|Ubuntu+Condensed|Varela+Round" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h2 id="titulo">
+			<abbr title="Labo2 Html S02">Labo2 HTML</abbr>5, prueba y error
+		</h2>
+	</header>
+	<nav>
+		<ul>
+			<li><a href="https://sgcampus.com.mx/wp-content/uploads/2014/02/HTML5_Cookbook.pdf">Libro pulenta</a></li>
+			<li><a href="http://alistapart.com/article/css-positioning-101">Posicionando</a></li>
+			<li><a href="https://developer.mozilla.org">Mozilla Developer Network</a></li>
+			<li><a href="https://fonts.google.com/">Fonts</a></li>
+			<li><a href="http://www.infotechnology.com/internet/Te-fuiste-a-la-B-la-frase-que-permite-localizar-el-Monumental-en-Google-Maps-20150518-0006.html">TFALB</a></li>
+		</ul>
+	</nav>
+
+	<section id="carga-de-datos">
+		<fieldset id="carga">
+			<legend>Carga de datos</legend>
+			<p>
+				<label>Nombre: <label>
+				<input type="text" placeholder="Nombre" name="nombre" required="true" id="inombre">
+			</p>
+			<p>
+				<label>Apellido: <label>
+				<input type="text" placeholder="Apellido" name="apellido" required="true" id="iapellido">
+			</p>
+			<p>
+				<label>DNI: <label>
+				<input type="text" placeholder="DNI" name="dni" required="true" id="idni">
+			</p>
+			<p>
+				<fieldset id="fssexo">
+					<legend>Sexo</legend>
+					<input type="radio" name="sexo" id="sexf" value="F" checked>Femenino</input>
+					<input type="radio" name="sexo" id="sexm" value="M">Masculino</input>
+				</fieldset>
+			</p>
+			<p>
+				<label>F.Nac: <label>
+				<input type="date" name="fnac" id="ifnac">
+			</p>
+			<p>
+				<label>Foto: <label>
+				<input type="file" required="true" name="foto" id="ifoto" title="">
+			</p>
+			<p>
+				<label>Email: <label>
+				<input type="email" placeholder="Correo electronico" name="correo" required="true" id="iemail">
+			</p>
+			<input type="button" id="iguardar" name="guardar" value="Guardar datos">
+		</fieldset>
+	</section>
+
+	<section id="datos-cargados">
+		<fieldset id="cargados">
+			<legend>Datos cargados</legend>
+			<ul id="lista-de-datos">
+			</ul>
+		</fieldset>
+	</section>
+
+	<hr>
+
+	<footer>
+		<h4>&copy;Papurri Master</h4>
+	</footer>
+</body>
+<script src="js/datos.js"></script>
+</html>
