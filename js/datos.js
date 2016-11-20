@@ -1,111 +1,159 @@
-var inputs = document.getElementsByTagName('input');
-var boton = document.getElementById('iguardar');
-boton.addEventListener('click', guardar);
+'use strict'
 
-loaddata();
+let inputs = () => { return Array.prototype.slice.call(document.getElementsByTagName('input')); }
 
-function getData() {
+let btnGuardar = () => {
+    let btn =  document.getElementById('iguardar');
+    btn.addEventListener('click', guardar);
+    return btn;
+};
 
-	var sxs = document.getElementsByName('sexo');
-	var sex = inputs['sexf'].checked ? 'F' : 'M';
+let btnBorrar = () => {
+    let btn =  document.getElementById('iborrar');
+    btn.addEventListener('click', borrar);
+    return btn;
+};
 
-	var _nombre		= inputs['nombre'].value;
-	var _apellido	= inputs['apellido'].value;
-	var _dni		= inputs['dni'].value;
-	var _fnac		= inputs['fnac'].value;
-	var _sexo		= sex;
-	var _foto		= inputs['foto'].value;
-	var _correo		= inputs['correo'].value;
+let guardar = () => {
+    localStorageManager().save(getScreenData());
+    resetForm();
+    ulLinks().clear();
+    ulLinks().load();
+}
 
-	var data = {
-		nombre : _nombre,
-		apellido  : _apellido,
-		dni : _dni,
-		fnac : _fnac,
-		sexo : _sexo,
-		foto : _foto,
-		correo : _correo
-	}
+let borrar = () => {
+    let dni = getScreenData().dni;
+    localStorageManager().remove(dni);
+    resetForm();
+    ulLinks().clear();
+    ulLinks().load();
+}
 
+let localStorageManager = () =>  {
+    let dataKeys = () => { return Object.keys(localStorage) ;}
+    let o =  {
+        elems : dataKeys(),
+        count : dataKeys().length,
+        get   : () => { return dataKeys() },
+        save  : (data) => {
+            if (data.dni === "")
+                return;
+           	if (localStorage.getItem(data.dni) === null) {
+		        localStorage.removeItem(data.dni);
+	        }
+            localStorage.setItem(data.dni, JSON.stringify(data));
+            },
+        getItem : (key) => {
+            return JSON.parse(localStorage.getItem(key));
+        },
+        remove : (key) => {
+            localStorage.removeItem(key);
+        }
+    };
+    return o;
+};
+
+let ulLinks = () => {
+    let ul = () => { return document.getElementById('lista-de-datos') };
+    let o = {
+        elems : ul(),
+        count : ul().childNodes.length,
+        clear : () => { while (ul().firstChild) ul().removeChild(ul().firstChild); },
+        add   : (data) => {
+                    console.log('Add ' + data);
+                    let atext = data.nombre + ' ' + data.apellido;
+                    let a = document.createElement('a');
+                    let linkText = document.createTextNode(atext);
+                    a.appendChild(linkText);
+                    a.href = "#" + data.dni;
+                    a.addEventListener('click', clickLink, false);
+                    let li = document.createElement("li");
+                    li.appendChild(a);
+                    ul().appendChild(li);
+                },
+        load   : () => {
+                    localStorageManager().get().map((item) => {
+                       let data = localStorageManager().getItem(item);
+                       let atext = data.nombre + ' ' + data.apellido;
+                       let a = document.createElement('a');
+                       let linkText = document.createTextNode(atext);
+                       a.appendChild(linkText);
+                       a.href = "#" + data.dni;
+                       a.addEventListener('click', clickLink, false);
+                       let li = document.createElement("li");
+                       li.appendChild(a);
+                       ul().appendChild(li);
+                    });
+                }
+    };
+    return o;
+};
+
+let clickLink = (ev) => {
+	var dni = ev.toElement.hash.replace('#','');
+	var data = localStorageManager().getItem(dni);
+
+    inputs().map((item) => {
+        switch (item.name) {
+            case 'nombre' : { item.value = data.nombre; break; }
+            case 'apellido' : { item.value = data.apellido; break; }
+            case 'dni' : { item.value = data.dni; break; }
+            case 'correo' : { item.value = data.correo; break; }
+            case 'fnac' : { item.value = data.fnac; break; }
+            case 'sexo' : { 
+                if (item.id == 'sexf' && data.sexo == 'F') {
+                    item.value = data.sexo;
+                    item.checked = true; 
+                }
+                if (item.id == 'sexm' && data.sexo == 'M') {
+                    item.value = data.sexo;
+                    item.checked = true; 
+                }
+                break; }
+            case 'foto' : { item.filename = data.foto; break; }
+            default : break;
+        }
+    }); 
+}
+
+let getScreenData = () => {
+    let data = {};
+    inputs().map((item) => {
+        switch (item.name) {
+            case 'nombre' : { data.nombre = item.value; break; }
+            case 'apellido' : { data.apellido = item.value; break; }
+            case 'dni' : { data.dni = item.value; break; }
+            case 'correo' : { data.correo = item.value; break; }
+            case 'fnac' : { data.fnac = item.value; break; }
+            case 'sexo' : { (item.id == 'sexf' && item.checked) ? data.sexo ='F' : data.sexo='M'; break; }
+            case 'foto' : { data.foto = item.filename; break; }
+            default : break;
+        }
+    });
 	return data;
 }
 
-function guardar() {
-	var data = getData();
-	agregarDatos(data);
-	loaddata();
+let resetForm = () => {
+    let data = {};
+    inputs().map((item) => {
+        switch (item.name) {
+            case 'nombre' : { item.value = ''; break; }
+            case 'apellido' : { item.value = ''; break; }
+            case 'dni' : { item.value  = ''; break; }
+            case 'correo' : { item.value  = ''; break; }
+            case 'fnac' : { item.value = ''; break; }
+            case 'sexo' : { (item.id == 'sexf') ? item.checked = true: item.checked = false; break; }
+            case 'foto' : { item.filename = ''; break; }
+            default : break;
+        }
+    });
+    inputs()[0].focus();
 }
 
-function agregarDatos(data) {
-	var atext = data.nombre + ' ' + data.apellido;
-	var a = document.createElement('a');
-	var linkText = document.createTextNode(atext);
-	a.appendChild(linkText);
-	a.href = "#" + data.dni;
-	a.addEventListener('click', clickLink, false);
-
-	var ul = document.getElementById("lista-de-datos");
-	var li = document.createElement("li");
-	li.appendChild(a);
-	ul.appendChild(li);
-
-	if (localStorage.getItem(data.dni) === null) {
-		localStorage.removeItem(data.dni);
-	}
-
-	localStorage.setItem(data.dni, JSON.stringify(data));
-
-	limpiar();
+let arranque = () => {
+    btnGuardar();
+    btnBorrar();
+    ulLinks().load();
 }
 
-function clickLink(ev) {
-	var dni = ev.toElement.hash.replace('#','');
-	var datos = localStorage.getItem(dni);
-	var data = JSON.parse(datos);
-
-	inputs['nombre'].value = data.nombre;
-	inputs['apellido'].value = data.apellido;
-	inputs['dni'].value = data.dni;
-	inputs['correo'].value = data.correo;
-	inputs['fnac'].value = data.fnac;
-
-	if (data.sexo === 'F') {
-		inputs['sexf'].checked = true;
-	}
-	else {
-		inputs['sexm'].checked = true;
-	}
-	inputs['foto'].filename = data.foto;
-}
-
-function limpiar() {
-	var elems = inputs.length;
-	for (var i = 0; i < elems; i++) {
-		if (inputs[i].type === 'button')
-			continue;
-		inputs[i].value = '';
-	}
-	inputs['sexf'].checked = true;
-	inputs[0].focus();
-}
-
-function clearLinks() {
-	var linksul = document.getElementById('lista-de-datos'); 
-	var linkcount = linksul.childNodes.length;
-
-	for (var i = 0; i < linkcount; i++) {
-		linksul.removeChild(linksul.childNodes[0]);
-	}
-}
-
-function loaddata() {
-	var ks = Object.keys(localStorage);
-	var elems = ks.length;
-
-	clearLinks();
-
-	for (var i = 0; i < elems; i++) {
-		var data = localStorage.getItem(ks[i]);
-		agregarDatos(JSON.parse(data));
-	}
-}
+arranque();
