@@ -50,7 +50,12 @@
 			</p>
 			<p>
 				<label>Foto: <label>
-				<input type="file" required="true" name="foto" id="ifoto" title="">
+				<!--<input type="file" required="true" name="foto" id="ifoto" title="">-->
+				<!--<input type="file" id="files" name="files[]" multiple />-->
+				<input type="file" id="ifoto" name="foto" title=" "  />
+				<label id='ilabelFile'></label>
+				<!--<output id="list"></output>-->
+				<canvas id="icanvas" name="canvas" style="border: 1px solid black;">Your Browser does not support canvas</canvas>
 			</p>
 			<p>
 				<label>Email: <label>
@@ -77,6 +82,7 @@
 </body>
 <!--<script src="js/datos.js"></script>-->
 <script src="js/localStorage.js"></script>
+<script src="js/files.js"></script>
 <script src="js/screen.js"></script>
 <script src="js/links.js"></script>
 </html>
